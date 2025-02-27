@@ -1,0 +1,4 @@
+footer{
+    display: grid;
+    grid-column: 10rem 1fr 2fr 1fr 10px;
+}

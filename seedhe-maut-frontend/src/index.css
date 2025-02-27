@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Bebas Neue", serif;
+}
+/* Customize Toastify Container */
+.Toastify__toast-container {
+  font-family: "Arial", sans-serif;
+}
+
+/* Default Toast Style */
+.Toastify__toast {
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+/* Customize Success Toast */
+.Toastify__toast--success {
+  background-color: #28a745 !important;
+  color: white;
+}
+
+/* Customize Error Toast */
+.Toastify__toast--error {
+  background-color: #dc3545 !important;
+  color: white;
+}
+
+/* Customize Warning Toast */
+.Toastify__toast--warning {
+  background-color: #ffc107 !important;
+  color: black;
+}
+
+/* Customize Info Toast */
+.Toastify__toast--info {
+  background-color: #17a2b8 !important;
+  color: white;
+}
+
+/* Progress Bar */
+.Toastify__progress-bar {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+
