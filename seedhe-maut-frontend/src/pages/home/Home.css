@@ -1,44 +1,56 @@
-.hello{
-    font-size: 16rem;
-    margin-top: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.hello {
+  font-size: 16rem;
+  margin-top: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 
 .parent {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
 }
-    
+
 .div1 {
-    grid-row: span 5 / span 5;
-    background-color: bisque;
-    height: 50vh;
-    margin: 0 20px 0 20px;
-    border-radius: 20px;
-    border: 1px solid rgb(55, 55, 55);
+  grid-row: span 5 / span 5;
+  background-color: bisque;
+  height: 50vh;
+  margin: 0 20px 0 20px;
+  border-radius: 20px;
+  border: 1px solid rgb(55, 55, 55);
 }
 
 .div2 {
-    grid-column: span 2 / span 2;
-    grid-row: span 5 / span 5;
-    background-color: bisque;
-    margin: 0 20px 0 20px;
-    border-radius: 20px;
-    border: 1px solid rgb(55, 55, 55);
+  grid-column: span 2 / span 2;
+  grid-row: span 5 / span 5;
+  background-color: bisque;
+  margin: 0 20px 0 20px;
+  border-radius: 20px;
+  border: 1px solid rgb(55, 55, 55);
 }
 
 .div3 {
-    grid-column: span 2 / span 2;
-    grid-row: span 5 / span 5;
-    grid-column-start: 4;
-    background-color: bisque;
-    margin: 0 20px 0 20px;
-    border-radius: 20px;
-    border: 1px solid rgb(55, 55, 55);
+  grid-column: span 2 / span 2;
+  grid-row: span 5 / span 5;
+  grid-column-start: 4;
+  background-color: bisque;
+  margin: 0 20px 0 20px;
+  border-radius: 20px;
+  border: 1px solid rgb(55, 55, 55);
 }
-        
+
+.bands {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  margin-right: 40px;
+}
+
+.band-list {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  margin-right: 32px;
+}

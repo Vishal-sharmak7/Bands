@@ -32,13 +32,18 @@ const Home = () => {
 
   return (
     <div>
+      {/* Displaying fetched bands */}
+      <h2 className="bands">Band List</h2>
+      <div className="band-list">
+        <ul>
+          {bandArray.map((band, index) => (
+            <li key={index}>{band.name}</li>
+          ))}
+        </ul>
+      </div>
       <div className="hello">HELLO USER</div>
 
-      <ul>
-        {bandArray.map((band) => (
-          <li key={band.id}>{band.name}</li> // Display band names
-        ))}
-      </ul>
+      
 
       <div className="parent">
         <div className="div1">1</div>
@@ -46,15 +51,7 @@ const Home = () => {
         <div className="div3">3</div>
       </div>
 
-      {/* Displaying fetched bands */}
-      <div>
-        <h2>Band List</h2>
-        <ul>
-          {bandArray.map((band, index) => (
-            <li key={index}>{band.name}</li>
-          ))}
-        </ul>
-      </div>
+      
     </div>
   );
 };
