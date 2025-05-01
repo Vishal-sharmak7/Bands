@@ -7,7 +7,7 @@ const Song = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8520/api/v1/songs`)
+      .get(`${import.meta.env.VITE_REACT_URL}songs`)
       .then((res) => {
         setSong(res.data);
       })

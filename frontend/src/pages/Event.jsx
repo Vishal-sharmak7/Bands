@@ -11,7 +11,7 @@ const Event = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8520/api/v1")
+      .get(`${import.meta.env.VITE_REACT_URL}`)
       .then((res) => {
         setConcerts(res.data);
       })

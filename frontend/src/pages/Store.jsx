@@ -8,7 +8,7 @@ const Store = () => {
      const navigate = useNavigate();
 
     useEffect(() => {
-      axios.get(`http://localhost:8520/api/v1/merch`)
+      axios.get(`${import.meta.env.VITE_REACT_URL}merch`)
       .then((res) => {
         setMerch(res.data); // res.data should be an array
       })

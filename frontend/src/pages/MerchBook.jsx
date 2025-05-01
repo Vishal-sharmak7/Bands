@@ -28,7 +28,7 @@ const MerchBook = () => {
         price: merch.price,
       };
 
-      await axios.post("http://localhost:8520/api/v1/merchInfo", payload);
+      await axios.post(`${import.meta.env.VITE_REACT_URL}merchInfo`, payload);
 
       alert(`Thank you for purchasing ${merch.title}!`);
       navigate("/store");

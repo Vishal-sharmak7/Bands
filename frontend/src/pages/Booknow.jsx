@@ -32,7 +32,7 @@ const Booknow = () => {
     try {
       
       const res = await axios.post(
-        "http://localhost:8520/api/v1/booking", 
+        `${import.meta.env.VITE_REACT_URL}booking`, 
         book 
       );
       alert("Booking successful!");
