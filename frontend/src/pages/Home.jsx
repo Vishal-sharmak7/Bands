@@ -3,7 +3,7 @@ import pose from "../assets/pose.png";
 import Button from "../components/Button";
 import MarqueeComponent from "../components/MarqueeComponent";
 import uk from "../assets/uk.png"
-import Music from "../components/music";
+import Music from "../components/Music";
 import vid from "../assets/seedhe car sen.gif"
 
 
