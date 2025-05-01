@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Store = () => {
 
      const [merch, setMerch] = useState([]);
+     const navigate = useNavigate();
 
     useEffect(() => {
       axios.get(`http://localhost:8520/api/v1/merch`)
@@ -43,6 +45,13 @@ const Store = () => {
                 <p className="mb-4  text-gray-700 font-semibold">
                   Price: {merchs.price}
                 </p>
+
+                <button
+                  onClick={() => navigate("/merchBook", { state: { merchs } })}
+                  className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110"
+                >
+                  Book Now
+                </button>
 
                
               </div>

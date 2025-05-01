@@ -9,6 +9,7 @@ import Event from './pages/Event'
 import Store from './pages/Store'
 import Song from './pages/Song'
 import Booknow from './pages/Booknow'
+import MerchBook from './pages/MerchBook'
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
       <Route path='/store' element={<Store/>} />
       <Route path='/songs' element={<Song/>} />
       <Route path='/booknow' element={<Booknow/>} />
+      <Route path='/merchBook' element={<MerchBook/>} />
    </Routes>
    
    <Footer/>
