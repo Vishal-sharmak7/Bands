@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import pose from "../assets/pose.png";
 import Button from "../components/Button";
 import MarqueeComponent from "../components/MarqueeComponent";
@@ -8,8 +8,20 @@ import vid from "../assets/seedhe car sen.gif"
 
 
 const Home = () => {
+  const [loggedInUser, setloggedInUser] = useState("")
+
+  useEffect(() => {
+    setloggedInUser(localStorage.getItem("loggedInUser"))
+  }, [])
+  
+
+
+
   return (
     <>
+    <div className=" flex text-6xl font-extrabold text-red-600 text-center justify-center align-center animate-bounce">
+      <h1><span className="">WELCOME</span> {loggedInUser}</h1>
+    </div>
       <div>
   <img src={uk} alt="" className="w-full h-auto max-h-[150px] sm:max-h-[200px] md:max-h-[600px]" />
 </div>

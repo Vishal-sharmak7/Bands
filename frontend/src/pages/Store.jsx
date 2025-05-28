@@ -53,6 +53,8 @@ const Store = () => {
                   Book Now
                 </button>
 
+                
+
                
               </div>
             </div>

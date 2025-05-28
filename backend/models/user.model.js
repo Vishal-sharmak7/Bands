@@ -1,22 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-const concertSchema = new mongoose.Schema({
-  image: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: String,
-    required: true,
-  },
-});
-
-export const concert = mongoose.model("concert", concertSchema);
+const userSchema =new mongoose.Schema({
+    name:{
+        type: String,
+        required: true
+    },
+     email:{
+        type: String,
+        required: true,
+        unique:true
+    },
+     password:{
+        type: String,
+        required: true
+    },
+}
+)
+export const usermodel = mongoose.model("usermodel" , userSchema)
