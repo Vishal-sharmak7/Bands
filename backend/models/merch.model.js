@@ -10,15 +10,8 @@ const merchSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    size:{
-        enum:[ "S" ,"M" , "L" , "XL" ],
-        type:String,
-        required: true
-    },
-    quantity:{
-         type: Number,
-         default:1
-    },
+    
+    
     price:{
         type: String,
         required: true
@@ -29,4 +22,6 @@ const merchSchema = new mongoose.Schema({
     }
 })
 
-export const merch = mongoose.model("merch" , merchSchema)
+ const merch = mongoose.model("merch" , merchSchema)
+
+ export default merch

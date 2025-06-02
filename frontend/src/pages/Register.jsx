@@ -18,6 +18,7 @@ const Register = () => {
     setformdata(copyregisterInfo);
   };
   console.log(formdata);
+
   const handleOnClick = async (e) => {
     e.preventDefault();
 
@@ -27,7 +28,7 @@ const Register = () => {
     }
 
     try {
-      const url = "http://localhost:8520/api/v1/register";
+      const url = `${import.meta.env.VITE_REACT_URL}register`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -48,7 +49,7 @@ const Register = () => {
              toast.error(details )
         }
         else if(!success){
-          toast.error(message)
+          toast.error(message)  
         }
     } catch (error) {
       return toast.error("enter correct Name , email, and password");

@@ -27,7 +27,7 @@ const Login = () => {
     }
 
     try {
-      const url = "http://localhost:8520/api/v1/login";
+      const url = `${import.meta.env.VITE_REACT_URL}login`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -36,11 +36,13 @@ const Login = () => {
         body: JSON.stringify(loginInfo),
       });
       const result = await response.json();
-      const { success, message ,jwttoken , name , error } = result;
+      const { success, message ,jwttoken , name ,_id, error } = result;
       if (success) {
          toast.success(message);
          localStorage.setItem('token', jwttoken)
          localStorage.setItem('loggedInUser', name)
+         localStorage.setItem("userId", _id);
+         
         setTimeout(() => {
           navigate("/");
         }, 2000);

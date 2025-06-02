@@ -9,7 +9,7 @@ const userregister = async (req, res) => {
     const user = await usermodel.findOne({ email });
     if (user) {
       return res
-        .status()
+        .status(400)
         .json({ message: "you are already registered you can login" });
     }
 
@@ -58,7 +58,8 @@ const userlogin = async (req, res) => {
       success: true,
       jwttoken,
       email,
-      name:user.name
+      name:user.name,
+       _id: user._id,
     });
   } catch (error) {
     res.status(500).json({

@@ -16,6 +16,7 @@ import Login from "./pages/login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import notfound from "../src/assets/404.png"
+import Cart from "./pages/Cart";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/concerts" element={<Event />} />
         <Route path="/store" element={<Store />} />
+        
         <Route
           path="/songs"
           element={
@@ -73,6 +75,7 @@ const App = () => {
           path="*"
           element={token ? <NotFound /> : <Navigate to="/login" replace />}
         />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
       <Footer />
