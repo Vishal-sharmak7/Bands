@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 const Store = () => {
   const [merch, setMerch] = useState([]);
@@ -26,10 +28,10 @@ const Store = () => {
         productId,
         quantity: 1,
       });
-      alert("Added to cart");
+      toast.success("Added to cart");
     } catch (error) {
       console.error("Error adding to cart:", error);
-      alert("Failed to add to cart");
+      toast.error("Failed to add to cart");
     }
   };
 

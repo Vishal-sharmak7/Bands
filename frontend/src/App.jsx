@@ -10,13 +10,14 @@ import Store from "./pages/Store";
 import Song from "./pages/Song";
 import Booknow from "./pages/Booknow";
 import MerchBook from "./pages/MerchBook";
-import Register from "./pages/Register";
+import Register from "./pages/Authentication/Register";
 import { Toaster } from "react-hot-toast";
-import Login from "./pages/login";
+import Login from "./pages/Authentication/login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import notfound from "../src/assets/404.png"
-import Cart from "./pages/Cart";
+import Cart from "./pages/user/Cart";
+import Profile from "./pages/user/Profile";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -76,6 +77,7 @@ const App = () => {
           element={token ? <NotFound /> : <Navigate to="/login" replace />}
         />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
       <Footer />

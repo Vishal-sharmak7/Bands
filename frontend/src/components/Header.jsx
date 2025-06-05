@@ -4,6 +4,7 @@ import logo from "../assets/file.png";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { LuShoppingCart } from "react-icons/lu";
+import { FaRegUserCircle } from "react-icons/fa";
 
 
 const Header = () => {
@@ -24,15 +25,10 @@ const Header = () => {
     toast.success("User logout");
     setTimeout(() => {
       navigate("/");
-    }, 2000);
+    }, 1000);
   };
 
-  const [loggedInUser, setloggedInUser] = useState("");
-
-  useEffect(() => {
-    setloggedInUser(localStorage.getItem("loggedInUser"));
-  }, []);
-
+  
   return (
     <header className="  top-0 bg-white z-50">
       <div className="flex justify-between items-center p-4 md:p-6 max-w-7xl mx-auto">
@@ -103,9 +99,9 @@ const Header = () => {
             <div className="relative ml-4 ">
               <div
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="cursor-pointer text-red-700 font-semibold hover:scale-105 transition border border-rose-600 rounded-xl w-30 h-10 text-center justify-center items-center flex"
+                className="cursor-pointer text-red-700 font-semibold hover:scale-105 transition border border-rose-600 rounded-4xl w-10 h-10  text-center justify-center items-center flex"
               >
-               {loggedInUser}
+               <FaRegUserCircle/>
               </div>
 
               {/* Dropdown Menu */}
@@ -115,6 +111,15 @@ const Header = () => {
                 }`}
               >
                 <ul className="text-gray-700 text-sm py-2">
+                    <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      navigate("/profile"); // or any other route
+                    }}
+                  >
+                    Profile
+                  </li>
                   <li
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
