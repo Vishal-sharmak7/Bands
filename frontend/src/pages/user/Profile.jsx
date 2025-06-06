@@ -32,7 +32,7 @@ const Profile = () => {
       alert("Update failed");
     }
   };
-
+  
   return (
     <>
       <div className="text-3xl flex flex-col items-center text-center mt-6">

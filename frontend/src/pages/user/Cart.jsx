@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAddress } from "../../Context/AddressContext";
 import { addressInputContext } from "../../Context/Address.input.context";
 import toast from "react-hot-toast";
+import asset from "../../assets/file.png"
 
 const Cart = () => {
   const { formData, handleChange, handleSubmit } =
@@ -73,6 +74,69 @@ const Cart = () => {
       <div className="p-4 text-center text-gray-500">Your cart is empty 🛒</div>
     );
   }
+
+
+
+  const handlePlaceOrder = async () => {
+  try {
+    const totalAmount = cart.items.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
+
+    // 1. Create order on your backend
+    const res = await axios.post(`${import.meta.env.VITE_REACT_URL}cart/payment/create-order`, {
+      price: totalAmount,
+      productId: "test-product-id",
+    });
+
+    const { id: order_id, amount, currency } = res.data;
+
+    // 2. Load Razorpay checkout script
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount,
+        currency,
+        name: "t-shirt",
+        description: "Test ",
+        image: "https://example.com/your_logo",
+        order_id,
+        callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+        prefill: {
+          name: "max",
+          email: "qwerty@example.com",
+          contact: "000000000",
+        },
+        notes: {
+          address: {address},
+        },
+        theme: {
+          color: "#3399cc",
+        },
+        handler: async function (response) {
+          toast.success("Payment Successful 🎉");
+          console.log("Payment Response:", response);
+          await handleClearCart();
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    };
+  } catch (error) {
+    console.error("Payment error:", error);
+    toast.error("Payment failed!");
+  }
+};
+
+
+
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -229,7 +293,7 @@ const Cart = () => {
           )}
         </p>
         <button
-          onClick={handleClearCart}
+          onClick={handlePlaceOrder}
           className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
         >
           Clear Cart
@@ -238,7 +302,7 @@ const Cart = () => {
 
       <div>
         <button
-          onClick={handleClearCart}
+           onClick={handlePlaceOrder}
           className="mt-2 bg-red-600 w-full text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in"
         >
           Place Order
