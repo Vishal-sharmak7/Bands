@@ -3,17 +3,21 @@ import axios from "axios";
 import { useAddress } from "../../Context/AddressContext";
 import { addressInputContext } from "../../Context/Address.input.context";
 import toast from "react-hot-toast";
-import asset from "../../assets/file.png"
+import { ImBin2 } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { formData, handleChange, handleSubmit } =
     useContext(addressInputContext);
+
+    const navigate =useNavigate()
 
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const { address } = useAddress();
 
   const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("loggedInUser");
 
   const fetchCart = async () => {
     try {
@@ -76,6 +80,7 @@ const Cart = () => {
   }
 
 
+  // razorpay
 
   const handlePlaceOrder = async () => {
   try {
@@ -84,10 +89,12 @@ const Cart = () => {
       0
     );
 
-    // 1. Create order on your backend
+  const productIds = cart.items.map(item => item.product._id);
+
+    // Create order on your backend
     const res = await axios.post(`${import.meta.env.VITE_REACT_URL}cart/payment/create-order`, {
       price: totalAmount,
-      productId: "test-product-id",
+      productIds,
     });
 
     const { id: order_id, amount, currency } = res.data;
@@ -102,8 +109,8 @@ const Cart = () => {
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount,
-        currency,
-        name: "t-shirt",
+        currency:"INR",
+        name: {username},
         description: "Test ",
         image: "https://example.com/your_logo",
         order_id,
@@ -114,13 +121,15 @@ const Cart = () => {
           contact: "000000000",
         },
         notes: {
-          address: {address},
+          address: `${address.houseNo}, ${address.street}, ${address.city}, ${address.state} - ${address.postalCode}, ${address.country}`,
         },
         theme: {
-          color: "#3399cc",
+          color: "#f51d1d",
         },
         handler: async function (response) {
-          toast.success("Payment Successful 🎉");
+          toast.success("Payment Successful 🎉",
+            navigate("/orders")
+          );
           console.log("Payment Response:", response);
           await handleClearCart();
         },
@@ -134,6 +143,9 @@ const Cart = () => {
     toast.error("Payment failed!");
   }
 };
+
+
+
 
 
 
@@ -162,7 +174,7 @@ const Cart = () => {
             </div>
             <div className="flex items-center gap-2">
               <button
-                className="bg-gray-200 px-2 rounded"
+                className="bg-gray-200 px-2 rounded hover:bg-gray-400 transition ease-in cursor-pointer"
                 onClick={() =>
                   handleUpdateQuantity(item.product._id, item.quantity - 1)
                 }
@@ -171,7 +183,7 @@ const Cart = () => {
               </button>
               <span>{item.quantity}</span>
               <button
-                className="bg-gray-200 px-2 rounded"
+                className="bg-gray-200 px-2 rounded hover:bg-gray-400 transition ease-in cursor-pointer"
                 onClick={() =>
                   handleUpdateQuantity(item.product._id, item.quantity + 1)
                 }
@@ -179,10 +191,10 @@ const Cart = () => {
                 +
               </button>
               <button
-                className="ml-4 text-red-600 text-3xl"
+                className="ml-4 text-red-600 hover:scale-115 transition ease-in cursor-pointer"
                 onClick={() => handleRemoveItem(item.product._id)}
               >
-                ⨯
+                <ImBin2 />
               </button>
             </div>
           </li>
@@ -293,7 +305,7 @@ const Cart = () => {
           )}
         </p>
         <button
-          onClick={handlePlaceOrder}
+          onClick={handleClearCart}
           className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
         >
           Clear Cart

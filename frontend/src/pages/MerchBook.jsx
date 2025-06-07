@@ -32,7 +32,7 @@ const MerchBook = () => {
       </p>
 
       <div>
-        <button  className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
+        <button  className="relative overflow-hidden rounded-md bg-red-600 px-5 py-2.5 text-white transition-all duration-300 [transition-timing-function:cubic-bezier(0.175,0.885,0.32,1.275)] active:-translate-y-1 active:scale-x-90 active:scale-y-110">
             Add to Cart
           </button>
       </div>

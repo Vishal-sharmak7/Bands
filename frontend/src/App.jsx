@@ -15,9 +15,10 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/Authentication/login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
-import notfound from "../src/assets/404.png"
+import notfound from "../src/assets/404.gif"
 import Cart from "./pages/user/Cart";
 import Profile from "./pages/user/Profile";
+import Orders from "./pages/user/Orders";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -78,6 +79,8 @@ const App = () => {
         />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<Orders />} />
+
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
       <Footer />
