@@ -9,7 +9,8 @@ import validations from "../middlewares/AuthValidation.js";
 import cartController from "../controllers/cartController.js";
 import auth from "../middlewares/auth.js";
 import address from "../controllers/handleaddress.js";
-import ProductOrder from "../controllers/Razorpay.js";
+import {createOrder ,verifyPayment} from "../controllers/Razorpay.js"
+import getOrderDetails from "../controllers/orders.js";
 
 const router = express.Router();
 
@@ -29,8 +30,9 @@ router.route("/cart/delete/:userId").delete(cartController.handledeleteCart);
 router.route("/address").post(address.handleAddress);
 router.route("/address/:userId").get(address.handleGetAddress);
 router.route("/address/update").put(address.handleupdate);
-router.route("/cart/payment/create-order").post(ProductOrder);
-
+router.route("/order").post(auth,createOrder)
+router.route("/payment/verify").post(auth,verifyPayment)
+router.route("/order/:userId").get( getOrderDetails)
 
 
 export default router;

@@ -1,16 +1,11 @@
-// user id->user -id
 
-// product -> array
-// product ->
-
-// qty
-// addat
 
 import mongoose from "mongoose";
 
 const cartItemSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: "merch" },
   quantity: { type: Number, default: 1 },
+  _id:false,
 });
 
 const cartSchema = new mongoose.Schema({

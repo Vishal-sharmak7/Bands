@@ -10,14 +10,13 @@ const Cart = () => {
   const { formData, handleChange, handleSubmit } =
     useContext(addressInputContext);
 
-    const navigate =useNavigate()
+  const navigate = useNavigate();
 
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const { address } = useAddress();
 
   const userId = localStorage.getItem("userId");
-  const username = localStorage.getItem("loggedInUser");
 
   const fetchCart = async () => {
     try {
@@ -34,6 +33,7 @@ const Cart = () => {
   };
 
   const handleUpdateQuantity = async (productId, quantity) => {
+    
     if (quantity < 1) return;
     await axios.put(`${import.meta.env.VITE_REACT_URL}cart/update`, {
       userId,
@@ -70,7 +70,8 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  if (loading) return <div className="p-4">Loading cart...</div>;
+  if (loading)
+    return <div className="p-4 text-4xl text-center ">Loading cart...</div>;
 
   //check cart empty or not
   if (!cart || cart.items.length === 0) {
@@ -79,76 +80,67 @@ const Cart = () => {
     );
   }
 
-
   // razorpay
 
-  const handlePlaceOrder = async () => {
-  try {
-    const totalAmount = cart.items.reduce(
+  const handlePayment = async () => {
+    const token = localStorage.getItem("token");
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    
+
+    const amount = cart.items.reduce(
       (acc, item) => acc + item.product.price * item.quantity,
       0
     );
 
-  const productIds = cart.items.map(item => item.product._id);
+    const items = cart.items.map((item) => ({
+      productId: item.product._id,
+      quantity: item.quantity,
+    }));
 
-    // Create order on your backend
-    const res = await axios.post(`${import.meta.env.VITE_REACT_URL}cart/payment/create-order`, {
-      price: totalAmount,
-      productIds,
-    });
+    console.log(items);
 
-    const { id: order_id, amount, currency } = res.data;
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_REACT_URL}order`,
+      {
+        totalAmount: amount,
+        items: items,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
-    // 2. Load Razorpay checkout script
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount,
-        currency:"INR",
-        name: {username},
-        description: "Test ",
-        image: "https://example.com/your_logo",
-        order_id,
-        callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
-        prefill: {
-          name: "max",
-          email: "qwerty@example.com",
-          contact: "000000000",
-        },
-        notes: {
-          address: `${address.houseNo}, ${address.street}, ${address.city}, ${address.state} - ${address.postalCode}, ${address.country}`,
-        },
-        theme: {
-          color: "#f51d1d",
-        },
-        handler: async function (response) {
-          toast.success("Payment Successful 🎉",
-            navigate("/orders")
-          );
-          console.log("Payment Response:", response);
-          await handleClearCart();
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: data.razorpayOrder.amount,
+      currency: "INR",
+      name: "Seedhe Maut",
+      description: "Purchase",
+      order_id: data.razorpayOrder.id,
+      handler: async (response) => {
+        await axios.post(
+          `${import.meta.env.VITE_REACT_URL}payment/verify`,
+          response,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        toast.success("Payment Successful!");
+        setTimeout(() => {
+          navigate("/orders");
+          handleClearCart();
+        });
+      },
+      prefill: {
+        name: loggedInUser,
+        address: `${address.houseNo}, ${address.street}, ${address.city}, ${address.state} - ${address.postalCode}, ${address.country}`,
+      },
+      theme: { color: "#F37254" },
     };
-  } catch (error) {
-    console.error("Payment error:", error);
-    toast.error("Payment failed!");
-  }
-};
 
-
-
-
-
-
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -314,7 +306,7 @@ const Cart = () => {
 
       <div>
         <button
-           onClick={handlePlaceOrder}
+          onClick={handlePayment}
           className="mt-2 bg-red-600 w-full text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in"
         >
           Place Order
