@@ -23,7 +23,7 @@ const AddressProviderInput = ({ children }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    
     const addressData = {
       userId,
       ...formData,
@@ -62,7 +62,7 @@ const AddressProviderInput = ({ children }) => {
 
   return (
     <addressInputContext.Provider
-      value={{ formData,setFormData, handleChange, handleSubmit }}
+      value={{ formData, setFormData, handleChange, handleSubmit }}
     >
       {children}
     </addressInputContext.Provider>

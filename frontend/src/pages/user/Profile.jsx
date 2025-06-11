@@ -1,38 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { LuPen } from "react-icons/lu";
 
 import { useAddress } from "../../Context/AddressContext";
 import { addressInputContext } from "../../Context/Address.input.context";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const { address, setAddress } = useAddress();
+  const { formData, setFormData, handleChange } = useContext(addressInputContext);
+  const [isEditing, setIsEditing] = useState(false); // 🆕 toggle edit mode
 
   const loggedInUser = localStorage.getItem("loggedInUser");
-  const { formData, handleChange, handleSubmit } =
-    useContext(addressInputContext);
+  const token = localStorage.getItem("token")
 
-  const UpdateAddress = async () => {
+  // update address
+  const UpdateAddress = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem("userId");
+    
     try {
-      const userId = localStorage.getItem("userId"); // Assuming you're storing it in localStorage
-
-      const response = await axios.put(
-        `${import.meta.env.VITE_REACT_URL}/address/update`,
-        {
-          userId,
-          ...formData,
-        }
+      const res = await axios.put(
+        `${import.meta.env.VITE_REACT_URL}address/update/${userId}`,
+        formData,
+         {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
       );
-
-      console.log("Updated successfully:", response.data);
-      alert("Address updated successfully!");
+      toast.success("Address updated successfully");
+      setAddress(res.data.address); 
+      setIsEditing(false); 
     } catch (error) {
-      console.error("Failed to update address:", error);
-      alert("Update failed");
+      toast.error("Error updating address");
+      
+      console.error(error);
     }
   };
-  
+
   return (
     <>
       <div className="text-3xl flex flex-col items-center text-center mt-6">
@@ -42,38 +49,17 @@ const Profile = () => {
         <span className="mt-4 font-semibold">{loggedInUser}</span>
       </div>
 
-      {/* Show Address Info */}
-      {address ? (
-        <div>
-          <div className="text-center mt-6 p-4 rounded-md max-w-3xl mx-auto">
-            <h3 className="text-lg font-semibold mb-2">📍 Delivery Address</h3>
-            <p>
-              {address.houseNo}, {address.street}
-            </p>
-            <p>
-              {address.city}, {address.state} - {address.postalCode}
-            </p>
-            <p>{address.country}</p>
-          </div>
-          <div className="text-center mt-6 p-4 rounded-md max-w-3xl mx-auto">
-            <button className="bg-red-400 rounded-3xl w-10 h-10 text-center items-center cursor-pointer"
-            onClick={()=>setAddress(false)}
-            type="submit"
-            >
-              <LuPen />
-            </button>
-          </div>
-        </div>
-      ) : (
+      
+      {!address || isEditing ? (
         <form
-          onSubmit={handleSubmit}
+          onSubmit={UpdateAddress}
           className="bg-white rounded-2xl flex flex-col p-10 md:p-20 items-center justify-center mt-6 shadow-md w-full max-w-5xl mx-auto"
         >
           <div className="text-xl font-semibold mb-10 text-center">
-            Add/Update Address 🏠
+            {isEditing ? "Update Address ✏️" : "Add Address 🏠"}
           </div>
 
-          {/* Row 1 */}
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 w-full">
             <input
               type="text"
@@ -104,7 +90,7 @@ const Profile = () => {
             />
           </div>
 
-          {/* Row 2 */}
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 w-full">
             <input
               type="text"
@@ -135,15 +121,50 @@ const Profile = () => {
             />
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <button
               type="submit"
               className="bg-red-600 text-white px-6 py-2 text-xl rounded-full hover:bg-red-700 transition cursor-pointer"
             >
-              Submit
+              {isEditing ? "Update" : "Submit"}
             </button>
+            {isEditing && (
+              <button
+                type="button"
+                className="bg-gray-400 text-white px-6 py-2 text-xl rounded-full hover:bg-gray-500 transition cursor-pointer"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </form>
+      ) : (
+      
+        <div>
+          <div className="text-center mt-6 p-4 rounded-md max-w-3xl mx-auto">
+            <h3 className="text-lg font-semibold mb-2">📍 Delivery Address</h3>
+            <p>
+              {address.houseNo}, {address.street}
+            </p>
+            <p>
+              {address.city}, {address.state} - {address.postalCode}
+            </p>
+            <p>{address.country}</p>
+          </div>
+          <div className="grid place-items-center text-center mt-6 p-4 rounded-md max-w-3xl mx-auto">
+            <button
+              className="bg-red-600 rounded-3xl w-10 h-10 flex items-center justify-center cursor-pointer"
+              onClick={() => {
+                setFormData(address); 
+                setIsEditing(true); 
+              }}
+              type="button"
+            >
+              <LuPen className="text-white text-lg" />
+            </button>
+          </div>
+        </div>
       )}
     </>
   );

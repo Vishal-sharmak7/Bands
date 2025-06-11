@@ -32,7 +32,7 @@ const Home = () => {
       </div>
 
       <div style={{ height: "600px", position: "relative" }}>
-        <CircularGallery bend={3} textColor="#ffffff" borderRadius={0.1} />
+        <CircularGallery bend={0} textColor="#ffffff" borderRadius={0.1} />
       </div>
 
       <div className="text-center">
@@ -70,7 +70,7 @@ const Home = () => {
       </div>
 
       <div className="w-full h-[40vh] relative overflow-hidden mt-12 max-h-[150px] sm:max-h-[200px] md:max-h-[600px] mb-10">
-        <img src={vid} alt="" className="w-full h-full object-cover" />
+        <img src={vid} alt="" className="w-full h-full object-cover "  />
         <div className="absolute inset-0 bg-gradient-to-t from-red-600 to-transparent flex items-center justify-center ">
           <div className="text-white text-4xl sm:text-6xl font-bold text-center px-6">
             UK Concerts
@@ -85,8 +85,8 @@ const Home = () => {
         </div>
       </div>
 
-      <MarqueeComponent />
-      <Music />
+      <MarqueeComponent/>
+      
     </>
   );
 };

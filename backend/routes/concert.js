@@ -29,9 +29,9 @@ router.route("/cart/update").put(cartController.handleUpdate);
 router.route("/cart/remove").delete(cartController.handleRemove);
 router.route("/cart/delete/:userId").delete(cartController.handledeleteCart);
 // address
-router.route("/address").post(auth, address.handleAddress);
-router.route("/address/:userId").get(auth, address.handleGetAddress);
-router.route("/address/update").put(auth , address.handleupdate);
+router.route("/address").post( address.handleAddress);
+router.route("/address/:userId").get( address.handleGetAddress);
+router.route("/address/update/:userId").put(auth, address.handleupdate);
 // payment
 router.route("/order").post(auth,createOrder)
 router.route("/payment/verify").post(auth,verifyPayment)
