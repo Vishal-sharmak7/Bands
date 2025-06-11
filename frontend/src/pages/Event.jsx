@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import load from "../assets/loading.gif";
 import uk from "../assets/uk.png";
 import { HiArrowSmallDown } from "react-icons/hi2";
 
 const Event = () => {
   const [concerts, setConcerts] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`${import.meta.env.VITE_REACT_URL}`)
       .then((res) => {
@@ -17,8 +19,17 @@ const Event = () => {
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
-      });
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
   }, []);
+
+  if (loading) {
+        return <div className="flex justify-center items-center w-full mt-10">
+          <img src={load} alt="Loading" srcset="" className="w-120  h-auto" />
+        </div>
+    }
 
   return (
     <>

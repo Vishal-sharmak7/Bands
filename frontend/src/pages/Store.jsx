@@ -3,16 +3,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import notfound from "../assets/notfound.gif";
+import load from "../assets/loading.gif";
 
 const Store = () => {
   const [merch, setMerch] = useState([]);
   const navigate = useNavigate();
   const [filterd, setfilterd] = useState([]);
   const [searchInput, setsearchInput] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
+     setLoading(true);
     axios
       .get(`${import.meta.env.VITE_REACT_URL}merch`)
       .then((res) => {
@@ -21,7 +24,10 @@ const Store = () => {
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
-      });
+      })
+       .finally(() => {
+      setLoading(false);
+    });
   }, []);
 
   const handleAddToCart = async (productId) => {
@@ -75,6 +81,12 @@ const Store = () => {
       setfilterd(filtered);
     }
   };
+
+  if (loading) {
+      return <div className="flex justify-center items-center w-full mt-10">
+        <img src={load} alt="Loading" srcset="" className="w-120  h-auto" />
+      </div>
+  }
 
   return (
     <>

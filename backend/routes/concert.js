@@ -23,15 +23,19 @@ router
   .post(validations.registerValidation, userAuth.userregister);
 router.route("/login").post(validations.loginValidation, userAuth.userlogin);
 router.route("/add").post(cartController.handleCart);
+// cart
 router.route("/cart/:userId").get(cartController.handleGetCart);
 router.route("/cart/update").put(cartController.handleUpdate);
 router.route("/cart/remove").delete(cartController.handleRemove);
 router.route("/cart/delete/:userId").delete(cartController.handledeleteCart);
-router.route("/address").post(address.handleAddress);
-router.route("/address/:userId").get(address.handleGetAddress);
-router.route("/address/update").put(address.handleupdate);
+// address
+router.route("/address").post(auth, address.handleAddress);
+router.route("/address/:userId").get(auth, address.handleGetAddress);
+router.route("/address/update").put(auth , address.handleupdate);
+// payment
 router.route("/order").post(auth,createOrder)
 router.route("/payment/verify").post(auth,verifyPayment)
+// orders
 router.route("/order/:userId").get( getOrderDetails)
 
 
