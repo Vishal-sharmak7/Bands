@@ -307,7 +307,7 @@ const Cart = () => {
       <div>
         <button
           onClick={handlePayment}
-          className="mt-2 bg-red-600 w-full text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in"
+          className="mt-2 bg-red-600 w-full text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in focus:bg-green-400 focus:content-'/00bb'"
         >
           Place Order
         </button>

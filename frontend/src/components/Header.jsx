@@ -41,13 +41,13 @@ const Header = () => {
         />
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 font-semibold text-lg">
-          <Link to="/" className="hover:text-red-700 hover:scale-110">Home</Link>
-          <Link to="/songs" className="hover:text-red-700 hover:scale-110">Songs</Link>
-          <Link to="/concerts" className="hover:text-red-700 hover:scale-110">Concerts</Link>
-          <Link to="/store" className="hover:text-red-700 hover:scale-110">Store</Link>
-          <Link to="/about" className="hover:text-red-700 hover:scale-110">About</Link>
-          <Link to="/booking" className="hover:text-red-700 hover:scale-110">Booking</Link>
+        <nav className="hidden md:flex gap-6 font-semibold text-lg ">
+          <Link to="/" className="hover:text-red-700 transition ease-in hover:scale-110 focus:text-red-600">Home</Link>
+          <Link to="/songs" className="hover:text-red-700 transition ease-in  hover:scale-110 focus:text-red-600">Songs</Link>
+          <Link to="/concerts" className="hover:text-red-700 transition ease-in hover:scale-110 focus:text-red-600">Concerts</Link>
+          <Link to="/store" className="hover:text-red-700 transition ease-in hover:scale-110 focus:text-red-600">Store</Link>
+          <Link to="/about" className="hover:text-red-700 transition ease-in hover:scale-110 focus:text-red-600">About</Link>
+          <Link to="/booking" className="hover:text-red-700 transition ease-in hover:scale-110 focus:text-red-600">Booking</Link>
         </nav>
 
         {/* Desktop User Section */}

@@ -23,13 +23,13 @@ const Home = () => {
 
   return (
     <>
-      <div>
-        <img
-          src={uk}
-          alt=""
-          className="w-full h-auto max-h-[150px] sm:max-h-[200px] md:max-h-[600px]"
-        />
-      </div>
+    <div className="p-4">
+  <img
+    src={uk}
+    alt="UK"
+    className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-6xl mx-auto rounded-xl shadow-lg"
+  />
+</div>
 
       <div style={{ height: "600px", position: "relative" }}>
         <CircularGallery bend={0} textColor="#ffffff" borderRadius={0.1} />

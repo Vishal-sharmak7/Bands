@@ -77,7 +77,7 @@ const App = () => {
           path="*"
           element={token ? <NotFound /> : <Navigate to="/login" replace />}
         />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders" element={<Orders />} />
 
