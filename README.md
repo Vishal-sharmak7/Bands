@@ -117,4 +117,7 @@ If you like this project, feel free to ⭐ the repo and share!
 This project is licensed under the MIT License.
 
 ```
+---
+
+Would you like me to generate badge icons (like `![MIT License](...)`, `![Vercel](...)`, etc.) or add screenshots directly?
 
