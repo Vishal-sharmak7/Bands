@@ -60,7 +60,7 @@ const Register = () => {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify(formdata),
       });
       await response.json();
     } catch (error) {
