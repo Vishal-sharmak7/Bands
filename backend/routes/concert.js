@@ -11,6 +11,7 @@ import auth from "../middlewares/auth.js";
 import address from "../controllers/handleaddress.js";
 import {createOrder ,verifyPayment} from "../controllers/Razorpay.js"
 import getOrderDetails from "../controllers/orders.js";
+import greetOnMail from "../controllers/greetOnMail.js"
 
 const router = express.Router();
 
@@ -38,5 +39,7 @@ router.route("/payment/verify").post(auth,verifyPayment)
 // orders
 router.route("/order/:userId").get( getOrderDetails)
 
+// for mail
+router.route("/send-mail").post(greetOnMail)
 
 export default router;
