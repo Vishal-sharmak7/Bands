@@ -37,20 +37,36 @@ const Register = () => {
         body: JSON.stringify(formdata),
       });
       const result = await response.json();
-      const { success, message , error } = result;
+      const { success, message, error } = result;
       if (success) {
-         toast.success(message);
+        toast.success(message);
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-        
-      }else if(error){
-             const details = error?.details[0].message;
-             toast.error(details )
-        }
-        else if(!success){
-          toast.error(message)  
-        }
+        greetMail()
+      } 
+      else if (error) {
+        const details = error?.details[0].message;
+        toast.error(details);
+      } else if (!success) {
+        toast.error(message);
+      }
+    } catch (error) {
+      return toast.error("enter correct Name , email, and password");
+    }
+  };
+
+  const greetMail = async () => {
+    try {
+      const url = `${import.meta.env.VITE_REACT_URL}send-mail`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formdata),
+      });
+      await response.json();
     } catch (error) {
       return toast.error("enter correct Name , email, and password");
     }
@@ -79,6 +95,7 @@ const Register = () => {
               required
             />
           </div>
+          
 
           <div className="mb-4">
             <label className="block text-gray-700 mb-1">Email</label>
